@@ -259,7 +259,7 @@ const OverviewViz = ({ data }: { data: any }) => {
         <group>
              {/* Back Button */}
              <group 
-                position={[-7.5, 6, 0]} 
+                position={[-7.5, 6, 2]} 
                 onClick={(e) => {
                     e.stopPropagation()
                     playClickSound()
@@ -280,8 +280,8 @@ const OverviewViz = ({ data }: { data: any }) => {
             </group>
 
             {/* Navigation Buttons */}
-            <NavButton direction="prev" position={[-9, 2, 0]} onClick={handlePrev} />
-            <NavButton direction="next" position={[9, 2, 0]} onClick={handleNext} />
+            <NavButton direction="prev" position={[-9, 2, 2]} onClick={handlePrev} />
+            <NavButton direction="next" position={[9, 2, 2]} onClick={handleNext} />
 
             <Html position={[0, 2, 0]} transform occlude distanceFactor={6} style={{ width: '1000px', height: '600px', overflowY: 'auto', pointerEvents: 'auto' }}>
                 <div style={{ 
@@ -375,7 +375,7 @@ const NextStepsViz = ({ data }: { data: any }) => {
         <group>
              {/* Back Button */}
              <group 
-                position={[-7.5, 6, 0]} 
+                position={[-7.5, 6, 2]} 
                 onClick={(e) => {
                     e.stopPropagation()
                     playClickSound()
@@ -396,8 +396,8 @@ const NextStepsViz = ({ data }: { data: any }) => {
             </group>
 
             {/* Navigation Buttons */}
-            <NavButton direction="prev" position={[-9, 2.5, 0]} onClick={toggleMonth} />
-            <NavButton direction="next" position={[9, 2.5, 0]} onClick={toggleMonth} />
+            <NavButton direction="prev" position={[-9, 2.5, 2]} onClick={toggleMonth} />
+            <NavButton direction="next" position={[9, 2.5, 2]} onClick={toggleMonth} />
 
             <Text position={[0, 5, 0]} fontSize={0.5} color="white" anchorX="center">
                 {currentData.title}

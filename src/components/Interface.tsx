@@ -77,25 +77,11 @@ export const Interface = ({ activeMonthIndex, setActiveMonthIndex }: InterfacePr
       </div>
 
       {/* AI Agent */}
-      <div style={{
-        position: 'absolute',
-        bottom: '0',
-        right: '0',
-        height: '50vh',
-        zIndex: 5,
-        pointerEvents: 'none',
-        filter: 'drop-shadow(-10px 0 20px rgba(0,0,0,0.5))'
-      }}>
+      <div className="ai-agent-container">
         <img 
           src="/avater.png" 
           alt="AI Agent" 
-          style={{
-            height: '100%',
-            width: 'auto',
-            objectFit: 'contain',
-            maskImage: 'linear-gradient(to top, black 80%, transparent 100%)', // Soft fade at top if needed, or remove
-            WebkitMaskImage: 'linear-gradient(to top, black 80%, transparent 100%)'
-          }} 
+          className="ai-agent-image"
         />
       </div>
     </>

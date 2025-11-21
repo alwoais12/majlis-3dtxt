@@ -7,3 +7,27 @@ html, body, #root {
   background: #303030;
   font-family: 'Inter', sans-serif;
 }
+
+.ai-agent-container {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 50vh;
+  z-index: 5;
+  pointer-events: none;
+  filter: drop-shadow(-10px 0 20px rgba(0,0,0,0.5));
+  transition: all 0.3s ease;
+}
+
+.ai-agent-image {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 768px) {
+  .ai-agent-container {
+    height: 35vh;
+    right: -10%;
+  }
+}
