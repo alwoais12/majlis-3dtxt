@@ -1,6 +1,6 @@
 import { Canvas } from '@react-three/fiber'
 import { Experience } from './components/Experience'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 
 function App() {
   // Start immediately
@@ -10,7 +10,7 @@ function App() {
   const audioRef = useRef<HTMLAudioElement>(null)
 
   // Play audio on first user interaction
-  const handleFirstInteraction = () => {
+  const handleFirstInteraction = useCallback(() => {
     if (!audioStarted && audioRef.current) {
       audioRef.current.volume = 0.3
       audioRef.current.play().catch((err) => {
@@ -18,7 +18,7 @@ function App() {
       })
       setAudioStarted(true)
     }
-  }
+  }, [audioStarted])
 
   // Handle BGM - try autoplay first
   useEffect(() => {
@@ -45,7 +45,7 @@ function App() {
       window.addEventListener('click', handleFirstInteraction)
       return () => window.removeEventListener('click', handleFirstInteraction)
     }
-  }, [audioStarted])
+  }, [audioStarted, handleFirstInteraction])
 
   return (
     <>
