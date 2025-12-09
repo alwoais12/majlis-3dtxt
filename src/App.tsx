@@ -1,56 +1,33 @@
 import { Canvas } from '@react-three/fiber'
 import { Experience } from './components/Experience'
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 function App() {
-  // Start immediately
   const started = true
-  const [muted, setMuted] = useState(false)
-  const [audioStarted, setAudioStarted] = useState(false)
+  const [muted, setMuted] = useState(true) // Start muted
   const audioRef = useRef<HTMLAudioElement>(null)
 
-  // Play audio on first user interaction
-  const handleFirstInteraction = useCallback(() => {
-    if (!audioStarted && audioRef.current) {
+  // Set initial volume and play audio (muted by default)
+  useEffect(() => {
+    if (audioRef.current) {
       audioRef.current.volume = 0.3
       audioRef.current.play().catch((err) => {
         console.log("Audio play failed:", err)
       })
-      setAudioStarted(true)
     }
-  }, [audioStarted])
+  }, [])
 
-  // Handle BGM - try autoplay first
-  useEffect(() => {
-    if (started && audioRef.current) {
-      audioRef.current.volume = 0.3
-      audioRef.current.play().then(() => {
-        setAudioStarted(true)
-      }).catch(() => {
-        console.log("Autoplay blocked, waiting for user interaction")
-      })
-    }
-  }, [started])
-
-  // Handle Mute
+  // Handle Mute toggle
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.muted = muted
     }
   }, [muted])
 
-  // Add click listener for first interaction
-  useEffect(() => {
-    if (!audioStarted) {
-      window.addEventListener('click', handleFirstInteraction)
-      return () => window.removeEventListener('click', handleFirstInteraction)
-    }
-  }, [audioStarted, handleFirstInteraction])
-
   return (
     <>
       {/* Background Music */}
-      <audio ref={audioRef} src="/bgm.mp3" loop autoPlay />
+      <audio ref={audioRef} src="/bgm.mp3" loop />
       
       {started && (
         <>
