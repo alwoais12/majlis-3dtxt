@@ -11,8 +11,8 @@ export const DataViz = ({ isInteracting }: DataVizProps) => {
   const groupRef = useRef<THREE.Group>(null)
   const timeRef = useRef(0)
 
-  // Oscillate rotation 25% each way (π/2 radians = 90 degrees = 25% of 360)
-  const maxRotation = Math.PI / 2 // 90 degrees = 25% of full rotation
+  // Oscillate rotation 25 degrees each way
+  const maxRotation = (25 * Math.PI) / 180 // 25 degrees in radians
 
   useFrame((_, delta) => {
     if (groupRef.current && !isInteracting) {
