@@ -38,7 +38,6 @@ export const Experience = () => {
     <>
       <OrbitControls 
         makeDefault 
-        onChange={handleInteractionStart}
         onStart={handleInteractionStart}
         onEnd={handleInteractionEnd}
       />

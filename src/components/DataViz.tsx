@@ -9,11 +9,17 @@ interface DataVizProps {
 
 export const DataViz = ({ isInteracting }: DataVizProps) => {
   const groupRef = useRef<THREE.Group>(null)
+  const timeRef = useRef(0)
 
-  // Auto-rotate very slowly only when not interacting
-  useFrame(() => {
+  // Oscillate rotation 25% each way (π/2 radians = 90 degrees = 25% of 360)
+  const maxRotation = Math.PI / 2 // 90 degrees = 25% of full rotation
+
+  useFrame((_, delta) => {
     if (groupRef.current && !isInteracting) {
-      groupRef.current.rotation.y += 0.002 // Very slow rotation
+      // Increment time slowly
+      timeRef.current += delta * 0.2// Speed of oscillation
+      // Use sine wave to oscillate between -maxRotation and +maxRotation
+      groupRef.current.rotation.y = Math.sin(timeRef.current) * maxRotation
     }
   })
 

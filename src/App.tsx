@@ -7,22 +7,29 @@ function App() {
   const [muted, setMuted] = useState(true) // Start muted
   const audioRef = useRef<HTMLAudioElement>(null)
 
-  // Set initial volume and play audio (muted by default)
+  // Set initial volume
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = 0.3
-      audioRef.current.play().catch((err) => {
-        console.log("Audio play failed:", err)
-      })
     }
   }, [])
 
-  // Handle Mute toggle
-  useEffect(() => {
+  // Handle Mute toggle and play audio
+  const handleMuteToggle = () => {
     if (audioRef.current) {
-      audioRef.current.muted = muted
+      if (muted) {
+        // Unmuting - try to play
+        audioRef.current.muted = false
+        audioRef.current.play().catch((err) => {
+          console.log("Audio play failed:", err)
+        })
+      } else {
+        // Muting
+        audioRef.current.muted = true
+      }
     }
-  }, [muted])
+    setMuted(!muted)
+  }
 
   return (
     <>
@@ -38,7 +45,7 @@ function App() {
           
           {/* Global Mute Button */}
           <button 
-            onClick={() => setMuted(!muted)}
+            onClick={handleMuteToggle}
             style={{
               position: 'absolute',
               top: '20px',
