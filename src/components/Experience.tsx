@@ -1,20 +1,33 @@
-import { OrbitControls, Environment, ContactShadows } from '@react-three/drei'
+import { OrbitControls, SpotLight, useDepthBuffer } from '@react-three/drei'
 import { DataViz } from './DataViz'
-import { reportData } from '../data/report'
+import { useRef } from 'react'
+import * as THREE from 'three'
 
-interface ExperienceProps {
-  activeMonthIndex: number
-}
+export const Experience = () => {
+  const depthBuffer = useDepthBuffer({ size: 256 })
 
-export const Experience = ({ activeMonthIndex }: ExperienceProps) => {
   return (
     <>
-      <OrbitControls makeDefault minPolarAngle={0} maxPolarAngle={Math.PI / 2} />
-      <Environment preset="city" />
+      <OrbitControls makeDefault />
       
-      <group position-y={-2}>
-        <DataViz data={reportData.categories[activeMonthIndex]} />
-        <ContactShadows opacity={0.5} scale={15} blur={2} far={10} resolution={256} color="#000000" />
+      {/* Ambient light for base visibility */}
+      <ambientLight intensity={0.1} />
+
+      {/* Visible Spotlight Beam */}
+      <SpotLight
+        depthBuffer={depthBuffer}
+        position={[0, 8, 0]}
+        distance={20}
+        angle={1.0}
+        attenuation={8}
+        anglePower={4} // Lower value = softer/wider spread
+        radiusTop={0.5} // Makes the beam start wider
+        color="#ffffff"
+        opacity={0.8} // Slightly more visible beam
+      />
+
+      <group position={[0, 0, 0]}>
+        <DataViz />
       </group>
     </>
   )

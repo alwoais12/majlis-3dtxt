@@ -1,13 +1,11 @@
 import { Canvas } from '@react-three/fiber'
 import { Experience } from './components/Experience'
-import { Interface } from './components/Interface'
-import { Intro } from './components/Intro'
 import { useState, useRef, useEffect } from 'react'
 import { AnimatePresence } from 'framer-motion'
 
 function App() {
-  const [activeMonthIndex, setActiveMonthIndex] = useState(0)
-  const [started, setStarted] = useState(false)
+  // Start immediately
+  const [started, setStarted] = useState(true)
   const [muted, setMuted] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
 
@@ -32,18 +30,13 @@ function App() {
     <>
       {/* Background Music */}
       <audio ref={audioRef} src="/bgm.mp3" loop />
-
-      <AnimatePresence>
-        {!started && <Intro onComplete={() => setStarted(true)} />}
-      </AnimatePresence>
       
       {started && (
         <>
-          <Canvas shadows camera={{ position: [0, 4, 12], fov: 42 }}>
-            <color attach="background" args={['#303030']} />
-            <Experience activeMonthIndex={activeMonthIndex} />
+          <Canvas shadows camera={{ position: [0, 0, 10], fov: 50 }}>
+            <color attach="background" args={['#1a1a1a']} />
+            <Experience />
           </Canvas>
-          <Interface activeMonthIndex={activeMonthIndex} setActiveMonthIndex={setActiveMonthIndex} />
           
           {/* Global Mute Button */}
           <button 
@@ -68,6 +61,21 @@ function App() {
           >
             {muted ? '🔇' : '🔊'}
           </button>
+
+          {/* AI Logo GIF */}
+          <img 
+            src="/AILogoVideoDarkOnce.gif" 
+            alt="AI Logo"
+            style={{
+              position: 'absolute',
+              bottom: '20px',
+              right: '20px',
+              width: '100px',
+              height: 'auto',
+              zIndex: 100,
+              opacity: 0.8
+            }}
+          />
         </>
       )}
     </>
