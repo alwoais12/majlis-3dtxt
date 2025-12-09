@@ -28,7 +28,7 @@ function App() {
   return (
     <>
       {/* Background Music */}
-      <audio ref={audioRef} src="/bgm.mp3" loop />
+      <audio ref={audioRef} src="/bgm.mp3" loop autoPlay />
       
       {started && (
         <>
