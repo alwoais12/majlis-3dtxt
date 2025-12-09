@@ -6,14 +6,28 @@ function App() {
   // Start immediately
   const started = true
   const [muted, setMuted] = useState(false)
+  const [audioStarted, setAudioStarted] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
 
-  // Handle BGM
+  // Play audio on first user interaction
+  const handleFirstInteraction = () => {
+    if (!audioStarted && audioRef.current) {
+      audioRef.current.volume = 0.3
+      audioRef.current.play().catch((err) => {
+        console.log("Audio play failed:", err)
+      })
+      setAudioStarted(true)
+    }
+  }
+
+  // Handle BGM - try autoplay first
   useEffect(() => {
     if (started && audioRef.current) {
       audioRef.current.volume = 0.3
-      audioRef.current.play().catch(() => {
-        console.log("Autoplay blocked, will play on interaction")
+      audioRef.current.play().then(() => {
+        setAudioStarted(true)
+      }).catch(() => {
+        console.log("Autoplay blocked, waiting for user interaction")
       })
     }
   }, [started])
@@ -24,6 +38,14 @@ function App() {
       audioRef.current.muted = muted
     }
   }, [muted])
+
+  // Add click listener for first interaction
+  useEffect(() => {
+    if (!audioStarted) {
+      window.addEventListener('click', handleFirstInteraction)
+      return () => window.removeEventListener('click', handleFirstInteraction)
+    }
+  }, [audioStarted])
 
   return (
     <>
