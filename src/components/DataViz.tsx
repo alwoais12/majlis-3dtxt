@@ -3,13 +3,17 @@ import { useRef } from 'react'
 import { useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
 
-export const DataViz = () => {
+interface DataVizProps {
+  isInteracting: boolean
+}
+
+export const DataViz = ({ isInteracting }: DataVizProps) => {
   const groupRef = useRef<THREE.Group>(null)
 
-  // Slow auto-rotation
-  useFrame((_, delta) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y += delta * 0.1 // Very slow rotation
+  // Auto-rotate very slowly only when not interacting
+  useFrame(() => {
+    if (groupRef.current && !isInteracting) {
+      groupRef.current.rotation.y += 0.002 // Very slow rotation
     }
   })
 
@@ -21,13 +25,55 @@ export const DataViz = () => {
         anchorY="middle"
         position={[0, 0, 0]}
         castShadow
-        bevelEnabled
-        bevelThickness={0.05}
-        bevelSize={0.02}
-        bevelSegments={5}
+        letterSpacing={0.05}
+        lineHeight={1}
+        outlineWidth={0.03}
+        outlineColor="#444444"
       >
         مجلس الذكاء الاصطناعي
-        <meshStandardMaterial color="white" metalness={0.3} roughness={0.4} />
+        <meshStandardMaterial 
+          color="white" 
+          metalness={0.3} 
+          roughness={0.2}
+          emissive="white"
+          emissiveIntensity={0.3}
+          side={THREE.DoubleSide}
+        />
+      </Text>
+      
+      {/* Back layers to create 3D depth effect */}
+      <Text
+        fontSize={1.5}
+        anchorX="center"
+        anchorY="middle"
+        position={[0, 0, -0.1]}
+        letterSpacing={0.05}
+        lineHeight={1}
+      >
+        مجلس الذكاء الاصطناعي
+        <meshStandardMaterial 
+          color="#cccccc" 
+          metalness={0.2} 
+          roughness={0.3}
+          side={THREE.DoubleSide}
+        />
+      </Text>
+      
+      <Text
+        fontSize={1.5}
+        anchorX="center"
+        anchorY="middle"
+        position={[0, 0, -0.2]}
+        letterSpacing={0.05}
+        lineHeight={1}
+      >
+        مجلس الذكاء الاصطناعي
+        <meshStandardMaterial 
+          color="#999999" 
+          metalness={0.2} 
+          roughness={0.4}
+          side={THREE.DoubleSide}
+        />
       </Text>
     </group>
   )

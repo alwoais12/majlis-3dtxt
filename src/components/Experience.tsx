@@ -1,12 +1,47 @@
 import { OrbitControls, SpotLight, useDepthBuffer } from '@react-three/drei'
 import { DataViz } from './DataViz'
+import { useState, useRef, useEffect } from 'react'
 
 export const Experience = () => {
   const depthBuffer = useDepthBuffer({ size: 256 })
+  const [isInteracting, setIsInteracting] = useState(false)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Handle interaction start
+  const handleInteractionStart = () => {
+    setIsInteracting(true)
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+  }
+
+  // Handle interaction end - wait 5 seconds before resuming
+  const handleInteractionEnd = () => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current)
+    }
+    timeoutRef.current = setTimeout(() => {
+      setIsInteracting(false)
+    }, 5000) // 5 seconds
+  }
+
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
 
   return (
     <>
-      <OrbitControls makeDefault />
+      <OrbitControls 
+        makeDefault 
+        onChange={handleInteractionStart}
+        onStart={handleInteractionStart}
+        onEnd={handleInteractionEnd}
+      />
       
       {/* Ambient light for base visibility */}
       <ambientLight intensity={0.1} />
@@ -25,7 +60,7 @@ export const Experience = () => {
       />
 
       <group position={[0, 0, 0]}>
-        <DataViz />
+        <DataViz isInteracting={isInteracting} />
       </group>
     </>
   )
