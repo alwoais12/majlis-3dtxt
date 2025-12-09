@@ -1,7 +1,5 @@
 import { OrbitControls, SpotLight, useDepthBuffer } from '@react-three/drei'
 import { DataViz } from './DataViz'
-import { useRef } from 'react'
-import * as THREE from 'three'
 
 export const Experience = () => {
   const depthBuffer = useDepthBuffer({ size: 256 })

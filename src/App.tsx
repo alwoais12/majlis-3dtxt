@@ -1,11 +1,10 @@
 import { Canvas } from '@react-three/fiber'
 import { Experience } from './components/Experience'
 import { useState, useRef, useEffect } from 'react'
-import { AnimatePresence } from 'framer-motion'
 
 function App() {
   // Start immediately
-  const [started, setStarted] = useState(true)
+  const started = true
   const [muted, setMuted] = useState(false)
   const audioRef = useRef<HTMLAudioElement>(null)
 
