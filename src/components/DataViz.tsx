@@ -39,10 +39,10 @@ export const DataViz = ({ isInteracting }: DataVizProps) => {
         مجلس الذكاء الاصطناعي
         <meshStandardMaterial 
           color="white" 
-          metalness={0.3} 
-          roughness={0.2}
+          metalness={0.1} 
+          roughness={0.1}
           emissive="white"
-          emissiveIntensity={0.3}
+          emissiveIntensity={0.6}
           side={THREE.DoubleSide}
         />
       </Text>
@@ -58,9 +58,9 @@ export const DataViz = ({ isInteracting }: DataVizProps) => {
       >
         مجلس الذكاء الاصطناعي
         <meshStandardMaterial 
-          color="#cccccc" 
-          metalness={0.2} 
-          roughness={0.3}
+          color="#eeeeee" 
+          metalness={0.1} 
+          roughness={0.2}
           side={THREE.DoubleSide}
         />
       </Text>
@@ -75,9 +75,9 @@ export const DataViz = ({ isInteracting }: DataVizProps) => {
       >
         مجلس الذكاء الاصطناعي
         <meshStandardMaterial 
-          color="#999999" 
-          metalness={0.2} 
-          roughness={0.4}
+          color="#dddddd" 
+          metalness={0.1} 
+          roughness={0.3}
           side={THREE.DoubleSide}
         />
       </Text>
