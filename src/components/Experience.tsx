@@ -5,22 +5,22 @@ import { useState, useRef, useEffect } from 'react'
 export const Experience = () => {
   const depthBuffer = useDepthBuffer({ size: 256 })
   const [isInteracting, setIsInteracting] = useState(false)
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
+  const timeoutRef = useRef<number | null>(null)
 
   // Handle interaction start
   const handleInteractionStart = () => {
     setIsInteracting(true)
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current)
+    if (timeoutRef.current !== null) {
+      window.clearTimeout(timeoutRef.current)
     }
   }
 
   // Handle interaction end - wait 5 seconds before resuming
   const handleInteractionEnd = () => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current)
+    if (timeoutRef.current !== null) {
+      window.clearTimeout(timeoutRef.current)
     }
-    timeoutRef.current = setTimeout(() => {
+    timeoutRef.current = window.setTimeout(() => {
       setIsInteracting(false)
     }, 5000) // 5 seconds
   }
@@ -28,8 +28,8 @@ export const Experience = () => {
   // Cleanup timeout on unmount
   useEffect(() => {
     return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current)
+      if (timeoutRef.current !== null) {
+        window.clearTimeout(timeoutRef.current)
       }
     }
   }, [])
